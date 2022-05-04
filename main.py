@@ -24,4 +24,7 @@ async def on_message(message):
     if message.content.startswith(prefix + 'hello'):
         await message.channel.send('Hello!')
 
+    if message.content.startswith(prefix + 'ping'):
+      await message.channel.send('Pong!')
+
 client.run(os.getenv("TOKEN"))
