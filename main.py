@@ -1,30 +1,24 @@
 import discord
 import os
-import requests
+
+class Settings:
+  Prefix = os.getenv("PREFIX")
+  Token = os.getenv("TOKEN")
+  Embed_color = os.getenv("COLOR")
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print('Logged on as {0}!'.format(self.user))
+
+    async def on_message(self, message):
+       if message.author == self.user:
+            return
+       if message.content.startswith(Settings.Prefix + 'hello'):
+            await message.channel.send('Hello World!')
+         
+       if message.content.startswith(Settings.Prefix + 'Stop'):
+          quit()
 
 
-client = discord.Client()
-
-
-
-@client.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
-
-    await client.change_presence(activity=discord.Game('Boolean'))
-
-prefix = os.getenv("PREFIX")
-
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith(prefix + 'hello'):
-        await message.channel.send('Hello!')
-
-    if message.content.startswith(prefix + 'ping'):
-      await message.channel.send('Pong!')
-
-client.run(os.getenv("TOKEN"))
+client = MyClient()
+client.run(Settings.Token)
