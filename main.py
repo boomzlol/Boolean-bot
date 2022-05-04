@@ -16,9 +16,8 @@ class MyClient(discord.Client):
        if message.content.startswith(Settings.Prefix + 'hello'):
             await message.channel.send('Hello World!')
          
-       if message.content.startswith(Settings.Prefix + 'Stop'):
-          quit()
-
+       if message.content.startswith(Settings.Prefix + 'ping'):
+         await message.channel.send('Pong!')
 
 client = MyClient()
 client.run(Settings.Token)
